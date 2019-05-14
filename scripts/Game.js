@@ -47,9 +47,14 @@ function update() {
 Leap.loop(function (frame) {
     hand = frame.hands[0];
     if(hand != null){
-        cube.rotation.x += hand.palmNormal[0] / 20;
-        cube.rotation.y += hand.palmNormal[1] / 20;
-        cube.rotation.z += hand.palmNormal[2] / 20;
+        cube.rotation.x = hand.palmNormal[0];
+        cube.rotation.y = hand.palmNormal[1];
+        cube.rotation.z = hand.palmNormal[2];
+    }
+    else{
+        cube.rotation.x = 0;
+        cube.rotation.y = 0;
+        cube.rotation.z = 0;
     }
     // insert stupid code joke here
 });
