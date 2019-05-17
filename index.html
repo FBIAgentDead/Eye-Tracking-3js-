@@ -8,8 +8,8 @@
     <title>Eye Tracking Game</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="scripts/lib/leapjs-master/leap-0.6.4.js"></script>
-    <script src="scripts/lib/GLTFLoader.js"></script>
     <script src="scripts/lib/Three.js"></script>
+    <script src="scripts/lib/GLTFLoader.js"></script>
 </head>
 
 <body>
@@ -17,6 +17,13 @@
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         scene.background = new THREE.Color( 0xffffff );
+
+        var loader = new THREE.GLTFLoader();
+        loader.load('Models/Hands/Rigged_Hand.gltf', function (gltf) {
+            scene.add(gltf.scene);
+        }, undefined, function(error) {
+            console.error(error);
+        });
         
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
