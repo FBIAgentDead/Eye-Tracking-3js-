@@ -16,14 +16,46 @@ function setup() {
 
     var geometry = new THREE.BoxGeometry( 1, 1, 1 );
     var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    material.side = THREE.FrontSide;
     cube = new THREE.Mesh( geometry, material );
     pivot[0] = cube.position.x;
     pivot[1] = cube.position.y;
     pivot[2] = cube.position.z;
     scene.add( cube );
+
+    GenerateSkybox();
+
+    //right camera angle
+    camera.rotation.y += 0;
     
     update();
+}
+
+function GenerateSkybox() {
+
+    //Skybox instantiate
+    var skyGeometry = new THREE.BoxGeometry(1000, 1000, 1000);
+    var skyMaterial = [
+        new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load("./SkyBox/blood_ft.png"), side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load("./SkyBox/blood_bk.png"), side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load("./SkyBox/blood_up.png"), side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load("./SkyBox/blood_dn.png"), side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load("./SkyBox/blood_rt.png"), side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load("./SkyBox/blood_lf.png"), side: THREE.DoubleSide
+        }),
+    ]
+    skybox = new THREE.Mesh(skyGeometry, skyMaterial);
+    scene.add(skybox);
 }
 
 //when the leap is connected
@@ -44,7 +76,6 @@ function onDeviceDisconnected() {
 }
 //this is the update that gets called every frame
 function update() {
-    
     //code here
     requestAnimationFrame(update);
 }

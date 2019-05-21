@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Eye Tracking Game</title>
+    <title>Leap Motion Game</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="scripts/lib/leapjs-master/leap-0.6.4.js"></script>
     <script src="scripts/lib/Three.js"></script>
@@ -16,20 +16,21 @@
     <script>
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        scene.background = new THREE.Color( 0xffffff );
+        // scene.background = new THREE.Color( 'FFFFFF' );
 
         var loader = new THREE.GLTFLoader();
-        loader.load('Models/Hands/Rigged_Hand.gltf', function (gltf) {
+        loader.load('Models/Hands/hand.glb', function (gltf) {
             scene.add(gltf.scene);
         }, undefined, function(error) {
             console.error(error);
         });
+        // loader.setResourcePath('Models/Hands/hand.mtl');
         
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
         
-        camera.position.z = 5;
+        camera.position.z = 10;
         
         var animate = function () {
             requestAnimationFrame(animate);
