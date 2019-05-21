@@ -94,7 +94,6 @@ Leap.loop(function (frame) {
         cube.rotation.x = 0;
         cube.rotation.y = 0;
         cube.rotation.z = 0;
-        
         cube.position.x = 0;
         cube.position.y = 0;
     }
