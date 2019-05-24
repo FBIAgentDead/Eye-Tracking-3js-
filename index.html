@@ -16,11 +16,20 @@
     <script>
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        // scene.background = new THREE.Color( 'FFFFFF' );
-
+        scene.background = new THREE.Color( 'FFFFFF' );
+        var rightHand;
+        
         var loader = new THREE.GLTFLoader();
-        loader.load('Models/Hands/hand.glb', function (gltf) {
+        loader.load('Models/Hands/Normal_Hands/Right_Hand/vr_glove_right_model_slim.gltf', function (gltf) {
             scene.add(gltf.scene);
+            rightHand = scene.children[ 0 ];
+            rightHand.pivot = [];
+            rightHand.scale.x = 10;
+            rightHand.scale.y = 10;
+            rightHand.scale.z = 10;
+            rightHand.pivot[0] = rightHand.position.x;
+            rightHand.pivot[1] = rightHand.position.y;
+            rightHand.pivot[2] = rightHand.position.z;
         }, undefined, function(error) {
             console.error(error);
         });

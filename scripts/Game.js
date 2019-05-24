@@ -1,28 +1,22 @@
 var controller;
 var hand;
-var cube;
-var pivot = [];
+
+var fpsDisplay = document.getElementById('leapFPS');
+var handCountDisplay = document.getElementById('handCount');
+var fingerCountDisplay = document.getElementById('fingerCount');
 
 function setup() {
     //leap setup
     controller = new Leap.Controller()
-    controller.connect();
     controller.setBackground(true);
+    controller.connect();
     controller.on('frame', update);
     controller.on('connect', onConnect);
     controller.on('disconnect', onDisconnect);
     controller.on('streamingStarted', onDeviceConnected);
     controller.on('streamingStopped', onDeviceDisconnected);
 
-    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    cube = new THREE.Mesh( geometry, material );
-    pivot[0] = cube.position.x;
-    pivot[1] = cube.position.y;
-    pivot[2] = cube.position.z;
-    scene.add( cube );
-
-    GenerateSkybox();
+    // GenerateSkybox();
 
     //right camera angle
     camera.rotation.y += 0;
@@ -82,20 +76,24 @@ function update() {
 
 Leap.loop(function (frame) {
     hand = frame.hands[0];
-    if(hand != null){
-        cube.rotation.x = hand.palmNormal[0];
-        cube.rotation.y = hand.palmNormal[1];
-        cube.rotation.z = hand.palmNormal[2];
-        var offsetVector = new THREE.Vector3(hand.palmPosition[0],0,0);
-        cube.position.x =  pivot[0] + hand.palmPosition[0]/10;
-        cube.position.y =  pivot[1] + (hand.palmPosition[1]/10) - 15;
+    //console.log(hand);
+    var previousFrame = controller.frame(0);
+    if(hand != null && rightHand != null){
+        var axisY = Math.atan2(hand.palmNormal[0], -hand.palmNormal[1]) - 90;
+        var axisZ = Math.atan2(hand.palmNormal[1], -hand.palmNormal[2]) - 90;
+
+        // rightHand.rotation.x = axisZ;
+        // rightHand.rotation.y = axisZ;
+        rightHand.rotation.z = axisY;
+        rightHand.position.x =  rightHand.pivot[0] + hand.palmPosition[0]/10;
+        rightHand.position.y =  rightHand.pivot[1] + (hand.palmPosition[1]/10) - 15;
     }
-    else{
-        cube.rotation.x = 0;
-        cube.rotation.y = 0;
-        cube.rotation.z = 0;
-        cube.position.x = 0;
-        cube.position.y = 0;
+    else if(rightHand != null){
+        rightHand.rotation.x = 0;
+        rightHand.rotation.y = 0;
+        rightHand.rotation.z = 0;
+        rightHand.position.x = 0;
+        rightHand.position.y = 0;
     }
 });
 
