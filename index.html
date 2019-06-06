@@ -23,6 +23,7 @@
         loader.load('Models/Hands/Normal_Hands/Right_Hand/vr_glove_right_model_slim.gltf', function (gltf) {
             scene.add(gltf.scene);
             rightHand = scene.children[ 0 ];
+            rightHand.rotateZ = Math.PI/4;
             rightHand.pivot = [];
             rightHand.scale.x = 10;
             rightHand.scale.y = 10;

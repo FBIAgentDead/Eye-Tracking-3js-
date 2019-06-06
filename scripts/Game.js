@@ -79,22 +79,24 @@ Leap.loop(function (frame) {
     //console.log(hand);
     var previousFrame = controller.frame(0);
     if(hand != null && rightHand != null){
-        var axisY = Math.atan2(hand.palmNormal[0], -hand.palmNormal[1]) - 90;
-        var axisZ = Math.atan2(hand.palmNormal[1], -hand.palmNormal[2]) - 90;
-
-        // rightHand.rotation.x = axisZ;
-        // rightHand.rotation.y = axisZ;
-        rightHand.rotation.z = axisY;
+        //rotation here:
+        var offset = Math.PI/2;
+        
+        
+        // rightHand.rotation.z = hand.roll() - offset;
+        // rightHand.rotation.x = hand.yaw();
+        rightHand.rotation.y = hand.pitch();
+        //Position here:
         rightHand.position.x =  rightHand.pivot[0] + hand.palmPosition[0]/10;
         rightHand.position.y =  rightHand.pivot[1] + (hand.palmPosition[1]/10) - 15;
     }
-    else if(rightHand != null){
-        rightHand.rotation.x = 0;
-        rightHand.rotation.y = 0;
-        rightHand.rotation.z = 0;
-        rightHand.position.x = 0;
-        rightHand.position.y = 0;
-    }
+    // else if(rightHand != null){
+    //     rightHand.rotation.x = 0;
+    //     rightHand.rotation.y = 0;
+    //     rightHand.rotation.z = 0;
+    //     rightHand.position.x = 0;
+    //     rightHand.position.y = 0;
+    // }
 });
 
 setup();
