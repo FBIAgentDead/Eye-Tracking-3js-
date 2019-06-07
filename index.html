@@ -18,12 +18,13 @@
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         scene.background = new THREE.Color( 'FFFFFF' );
         var rightHand;
-        
+        var light = new THREE.AmbientLight(0x404040, 100);
+        scene.add(light);
         var loader = new THREE.GLTFLoader();
         loader.load('Models/Hands/Normal_Hands/Right_Hand/vr_glove_right_model_slim.gltf', function (gltf) {
-            scene.add(gltf.scene);
-            rightHand = scene.children[ 0 ];
-            rightHand.rotateZ = Math.PI/4;
+            // scene.add(gltf.scene);
+            rightHand = gltf.scene.children[ 0 ];            
+            // rightHand.rotateZ = Math.PI/4;
             rightHand.pivot = [];
             rightHand.scale.x = 10;
             rightHand.scale.y = 10;
@@ -31,10 +32,36 @@
             rightHand.pivot[0] = rightHand.position.x;
             rightHand.pivot[1] = rightHand.position.y;
             rightHand.pivot[2] = rightHand.position.z;
+
+            var textureLoader = new THREE.TextureLoader();
+                    // loader.setResourcePath('Models/Hands/hand.mtl');
+                    var mat;
+            
+            textureLoader.load(
+                    // resource URL
+                    'Models/Hands/Normal_Hands/Right_Hand/vr_glove_color_red.jpg',
+            
+                    // onLoad callback
+                    function (texture) {
+                        // in this example we create the material when the texture is loaded
+                        rightHand.material = new THREE.MeshLambertMaterial({
+                            map: texture
+                        }); 
+                        scene.add(rightHand);
+                    },
+            
+                    // onProgress callback currently not supported
+                    undefined,
+            
+                    // onError callback
+                    function (err) {
+                        console.error('An error happened.');
+                    }
+                );
+
         }, undefined, function(error) {
             console.error(error);
         });
-        // loader.setResourcePath('Models/Hands/hand.mtl');
         
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);

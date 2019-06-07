@@ -1,10 +1,6 @@
 var controller;
 var hand;
 
-var fpsDisplay = document.getElementById('leapFPS');
-var handCountDisplay = document.getElementById('handCount');
-var fingerCountDisplay = document.getElementById('fingerCount');
-
 function setup() {
     //leap setup
     controller = new Leap.Controller()
@@ -77,15 +73,22 @@ function update() {
 Leap.loop(function (frame) {
     hand = frame.hands[0];
     //console.log(hand);
-    var previousFrame = controller.frame(0);
+    var matrix;
+    var previousFrame = controller.frame(1);
     if(hand != null && rightHand != null){
         //rotation here:
         var offset = Math.PI/2;
-        
-        
+        var angle = frame.rotationAngle(previousFrame);
+        // console.log(angle);
+        // matrix = hand.rotationMatrix(previousFrame);
+        // console.log(matrix);
+        // rightHand.rotation.rotationMatrix = matrix;
+        // rightHand.rotation.set(previousFrame.hands[0].);
+        // console.log(previousFrame);
         // rightHand.rotation.z = hand.roll() - offset;
         // rightHand.rotation.x = hand.yaw();
-        rightHand.rotation.y = hand.pitch();
+        // rightHand.rotation.y = hand.pitch();
+        rightHand.rotation.set(hand.pitch(), hand.yaw(), hand.roll() - offset, "ZXY" );
         //Position here:
         rightHand.position.x =  rightHand.pivot[0] + hand.palmPosition[0]/10;
         rightHand.position.y =  rightHand.pivot[1] + (hand.palmPosition[1]/10) - 15;
