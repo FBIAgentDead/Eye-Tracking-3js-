@@ -4,7 +4,7 @@ var out = document.getElementById("out");
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 var player = new Player(300,380,80,15);
-var ball = new Ball(200,200,5,getDot[0],getDot[1],"red");
+var ball = new Ball(200,200,5,2,5,"red");
 // var ball = new Ball(200,200,5,Math.floor(getRandomNumber(-3, 3) + 5),2,"red");
 var bricks;
 var dKeyDown = false;
@@ -14,11 +14,6 @@ var winner = false;
 
 loadMap();
 start();
-
-function getDot(){
-	var dot = [ball.x - player.x, ball.y - player.y];
-	return dot;
-}
 
 function getRandomNumber(min,max){
 	return Math.floor(Math.random()*(max-min) + min);
@@ -274,8 +269,8 @@ function restart(){
 	out.innerHTML = "";
 	gameOver = false;
 	loadMap();
-	ball = new Ball(200,200,5,Math.floor(Math.random()*4+4),Math.floor(Math.random()*4+4),"red");
 	player = new Player(300,380,80,15);
+	ball = new Ball(200,200,5,2,5,"red");
 	start();
 }
 
