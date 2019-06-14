@@ -1,0 +1,12 @@
+body {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+canvas {
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+}
+
+#canvas2 {
+    position: absolute;
+}
