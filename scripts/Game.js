@@ -77,18 +77,12 @@ Leap.loop(function (frame) {
     var previousFrame = controller.frame(1);
     if(hand != null && rightHand != null){
         //rotation here:
-        var offset = Math.PI/2;
-        var angle = frame.rotationAngle(previousFrame);
-        // console.log(angle);
-        // matrix = hand.rotationMatrix(previousFrame);
-        // console.log(matrix);
-        // rightHand.rotation.rotationMatrix = matrix;
-        // rightHand.rotation.set(previousFrame.hands[0].);
-        // console.log(previousFrame);
-        // rightHand.rotation.z = hand.roll() - offset;
-        // rightHand.rotation.x = hand.yaw();
-        // rightHand.rotation.y = hand.pitch();
+        let offset = Math.PI/2;
+        let angle = ;
+        console.log(hand.palmNormal);
+        console.log(angle);
         rightHand.rotation.set(hand.pitch(), hand.yaw(), hand.roll() - offset, "ZXY" );
+       
         //Position here:
         rightHand.position.x =  rightHand.pivot[0] + hand.palmPosition[0]/10;
         rightHand.position.y =  rightHand.pivot[1] + (hand.palmPosition[1]/10) - 15;
@@ -102,4 +96,33 @@ Leap.loop(function (frame) {
     // }
 });
 
+function normaltoangle(x,y,z){
+    let angle = [0,0,0];
+    return angle;
+}
+
 setup();
+
+class HandRotation{
+
+    constructor(hand){
+        this.hand = hand;
+        this.xParent = new THREE.Object3D();
+        this.yParent = new THREE.Object3D();
+        this.addparents();
+    }
+
+    addparents() {
+        const { xParent, yParent, hand } = this;
+        xParent.add(hand);
+        yParent.add(xParent);
+    }
+
+    setrotation(x,y,z) {
+        const {xParent, yParent, hand} = this;
+        xParent.rotation.x = x;
+        yParent.rotation.y = y;
+        hand.rotation.z = z;
+    }
+
+}
